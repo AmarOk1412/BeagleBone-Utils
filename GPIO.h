@@ -7,8 +7,6 @@
 #define LOW 0
 #define INPUT "in"
 #define OUTPUT "out"
-#define OPENFILEFAIL false
-#define WRITEFILESUCCESS true
 
 class GPIO
 {
