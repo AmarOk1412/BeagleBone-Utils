@@ -35,5 +35,14 @@
 #define P9_41 20
 #define P9_42 7
 
+#define PWMP8_13 "ehrpwm.2:1"
+#define PWMP8_19 "ehrpwm.2:0"
+#define PWMP9_14 "ehrpwm.1:0"
+#define PWMP9_16 "ehrpwm.1:1"
+#define PWMP9_28 "ecap.2"
+#define PWMP9_29 "ehrpwm.0:1"
+#define PWMP9_31 "ehrpwm.0:0"
+#define PWMP9_42 "ecap.0"
+
 #endif
 
