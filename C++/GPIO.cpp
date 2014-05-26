@@ -39,7 +39,6 @@ GPIO::pinMode(int pin, std::string mode)
   {
     std::ostringstream pinNumber;
     pinNumber << pin;
-    cout << DIR + "gpio" + pinNumber.str() + "/direction";
     std::ofstream dirFile((DIR + "gpio" + pinNumber.str() + "/direction").c_str());
     if(dirFile)
       dirFile << mode;
