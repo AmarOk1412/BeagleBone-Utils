@@ -9,7 +9,38 @@
 
 PWM::PWM()
 {
-  //TODO : enable PWM
+  int MMAP_OFFSET = 0x44c00000;
+  int MMAP_SIZE   = 0x48ffffff-MMAP_OFFSET;
+  int CM_PER_BASE = 0x44e00000 - MMAP_OFFSET;
+  int CM_PER_EPWMSS1_CLKCTRL = CM_PER_BASE + 0xcc;
+  int CM_PER_EPWMSS0_CLKCTRL = CM_PER_BASE + 0xd4;
+  int CM_PER_EPWMSS2_CLKCTRL = CM_PER_BASE + 0xd8;
+  /**TODO*/
+  std::ofstream gpmc_a2File("/sys/kernel/debug/omap_mux/gpmc_a2");
+  if(gpmc_a2File)
+    gpmc_a2File << "6";
+  std::ofstream gpmc_a3File("/sys/kernel/debug/omap_mux/gpmc_a3");
+  if(gpmc_a3File)
+    gpmc_a3File << "6";
+  std::ofstream mcasp0_aclkxFile("/sys/kernel/debug/omap_mux/mcasp0_aclkx");
+  if(mcasp0_aclkxFile)
+    mcasp0_aclkxFile << "1";
+  std::ofstream mcasp0_fsxFile("/sys/kernel/debug/omap_mux/mcasp0_fsx");
+  if(mcasp0_fsxFile)
+    mcasp0_fsxFile << "1";
+  std::ofstream gpmc_ad9File("/sys/kernel/debug/omap_mux/gpmc_ad9");
+  if(gpmc_ad9File)
+    gpmc_ad9File << "4";
+  std::ofstream gpmc_ad8File("/sys/kernel/debug/omap_mux/gpmc_ad8");
+  if(gpmc_ad8File)
+    gpmc_ad8File << "4";
+  std::ofstream ecap0_in_pwm0_outFile("/sys/kernel/debug/omap_mux/ecap0_in_pwm0_out");
+  if(ecap0_in_pwm0_outFile)
+    ecap0_in_pwm0_outFile << "0";
+  std::ofstream mcasp0_ahclkrFile("/sys/kernel/debug/omap_mux/mcasp0_ahclkr");
+  if(mcasp0_ahclkrFile)
+    mcasp0_ahclkrFile << "4";
+
   pwnPin[0] = PWMP8_13;
   pwnPin[1] = PWMP8_19;
   pwnPin[2] = PWMP9_14;
