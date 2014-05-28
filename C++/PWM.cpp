@@ -3,19 +3,21 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define OPENFILEFAIL false
 #define WRITEFILESUCCESS true
 
 PWM::PWM()
 {
-  int MMAP_OFFSET = 0x44c00000;
+  /*int MMAP_OFFSET = 0x44c00000;
   int MMAP_SIZE   = 0x48ffffff-MMAP_OFFSET;
   int CM_PER_BASE = 0x44e00000 - MMAP_OFFSET;
   int CM_PER_EPWMSS1_CLKCTRL = CM_PER_BASE + 0xcc;
   int CM_PER_EPWMSS0_CLKCTRL = CM_PER_BASE + 0xd4;
   int CM_PER_EPWMSS2_CLKCTRL = CM_PER_BASE + 0xd8;
-  /**TODO*/
+  TODO
   std::ofstream gpmc_a2File("/sys/kernel/debug/omap_mux/gpmc_a2");
   if(gpmc_a2File)
     gpmc_a2File << "6";
@@ -39,8 +41,8 @@ PWM::PWM()
     ecap0_in_pwm0_outFile << "0";
   std::ofstream mcasp0_ahclkrFile("/sys/kernel/debug/omap_mux/mcasp0_ahclkr");
   if(mcasp0_ahclkrFile)
-    mcasp0_ahclkrFile << "4";
-
+    mcasp0_ahclkrFile << "4";*/
+  system("python ../Python/pwmenable.py");
   pwnPin[0] = PWMP8_13;
   pwnPin[1] = PWMP8_19;
   pwnPin[2] = PWMP9_14;
