@@ -11,13 +11,13 @@
 
 PWM::PWM()
 {
-  /*int MMAP_OFFSET = 0x44c00000;
+  /*nt MMAP_OFFSET = 0x44c00000;
   int MMAP_SIZE   = 0x48ffffff-MMAP_OFFSET;
   int CM_PER_BASE = 0x44e00000 - MMAP_OFFSET;
   int CM_PER_EPWMSS1_CLKCTRL = CM_PER_BASE + 0xcc;
   int CM_PER_EPWMSS0_CLKCTRL = CM_PER_BASE + 0xd4;
   int CM_PER_EPWMSS2_CLKCTRL = CM_PER_BASE + 0xd8;
-  TODO
+  TODO*/
   std::ofstream gpmc_a2File("/sys/kernel/debug/omap_mux/gpmc_a2");
   if(gpmc_a2File)
     gpmc_a2File << "6";
@@ -41,7 +41,7 @@ PWM::PWM()
     ecap0_in_pwm0_outFile << "0";
   std::ofstream mcasp0_ahclkrFile("/sys/kernel/debug/omap_mux/mcasp0_ahclkr");
   if(mcasp0_ahclkrFile)
-    mcasp0_ahclkrFile << "4";*/
+    mcasp0_ahclkrFile << "4";
   system("python ../Python/pwmenable.py");
   pwnPin[0] = PWMP8_13;
   pwnPin[1] = PWMP8_19;
@@ -192,6 +192,23 @@ PWM::writeFrequency(std::string pin, int frequency)
   std::ofstream freqFile(("/sys/class/pwm/" + pin + "/period_freq").c_str());
   if(freqFile)
     freqFile << frequency;
+  else
+    rv = OPENFILEFAIL;
+  
+  return rv;
+}
+
+bool
+PWM::writeDutyPercent(std::string pin, int percent)
+{
+/*  if(!pwnPin.contains(pin))
+    return false;*/
+
+  bool rv = WRITEFILESUCCESS;
+
+  std::ofstream dutyPerFile(("/sys/class/pwm/" + pin + "/duty_percent").c_str());
+  if(dutyPerFile && percent >= 0 && percent <= 100)
+    dutyPerFile << percent;
   else
     rv = OPENFILEFAIL;
   

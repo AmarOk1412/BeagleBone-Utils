@@ -17,6 +17,7 @@ public:
   bool detach(std::string pin);
   bool writePos(std::string pin, int pos);
   bool writeFrequency(std::string pin, int frequency);
+  bool writeDutyPercent(std::string pin, int percent);
   bool writeNSDegree(std::string pin, int NSDegree);
   std::string PWMName(int pin);
 
