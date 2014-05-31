@@ -12,6 +12,7 @@
 
 PWM::PWM()
 {
+  //enable PWM on EHRPWM1A=P9.14
   std::cout << "Writing: 6 to: /sys/kernel/debug/omap_mux/gpmc_a2" << std::endl;
   std::ofstream gpmc_a2File;
   gpmc_a2File.open("/sys/kernel/debug/omap_mux/gpmc_a2");
@@ -19,6 +20,7 @@ PWM::PWM()
   gpmc_a2File << "6" << std::endl;
   gpmc_a2File.close();
 
+  //enable PWM on EHRPWM1B=P9.16
   std::cout << "Writing: 6 to: /sys/kernel/debug/omap_mux/gpmc_a3" << std::endl;
   std::ofstream gpmc_a3File;
   gpmc_a3File.open("/sys/kernel/debug/omap_mux/gpmc_a3");
@@ -26,6 +28,7 @@ PWM::PWM()
   gpmc_a3File << "6" << std::endl;
   gpmc_a3File.close();
 
+  //enable PWM on EHRPWM0B=P9.31
   std::cout << "Writing: 1 to: /sys/kernel/debug/omap_mux/mcasp0_aclkx" << std::endl;
   std::ofstream mcasp0_aclkxFile;
   mcasp0_aclkxFile.open("/sys/kernel/debug/omap_mux/mcasp0_aclkx");
@@ -33,6 +36,7 @@ PWM::PWM()
   mcasp0_aclkxFile << "1" << std::endl;
   mcasp0_aclkxFile.close();
 
+  //enable PWM on EHRPWM0A=P9.29
   std::cout << "Writing: 1 to: /sys/kernel/debug/omap_mux/mcasp0_fsx" << std::endl;
   std::ofstream mcasp0_fsxFile;
   mcasp0_fsxFile.open("/sys/kernel/debug/omap_mux/mcasp0_fsx");
@@ -40,6 +44,7 @@ PWM::PWM()
   mcasp0_fsxFile << "1" << std::endl;
   mcasp0_fsxFile.close();
 
+  //enable PWM on EHRPWM2B=P8.19
   std::cout << "Writing: 4 to: /sys/kernel/debug/omap_mux/gpmc_ad9" << std::endl;
   std::ofstream gpmc_ad9File;
   gpmc_ad9File.open("/sys/kernel/debug/omap_mux/gpmc_ad9");
@@ -47,6 +52,7 @@ PWM::PWM()
   gpmc_ad9File << "4" << std::endl;
   gpmc_ad9File.close();
 
+  //enable PWM on EHRPWM2A=P8.13
   std::cout << "Writing: 4 to: /sys/kernel/debug/omap_mux/gpmc_ad8" << std::endl;
   std::ofstream gpmc_ad8File;
   gpmc_ad8File.open("/sys/kernel/debug/omap_mux/gpmc_ad8");
@@ -67,7 +73,8 @@ PWM::PWM()
   mcasp0_ahclkrFile.exceptions(std::ios::badbit);
   mcasp0_ahclkrFile << "4" << std::endl;
   mcasp0_ahclkrFile.close();
-  //system("python ../Python/pwmenable.py");
+
+  //Init PWM Available pin tab
   pwnPin[0] = PWMP8_13;
   pwnPin[1] = PWMP8_19;
   pwnPin[2] = PWMP9_14;
@@ -83,22 +90,41 @@ PWM::~PWM()
 
 }
 
+/**
+* PWM::attach
+* pin
+* return true if the pin is correctly initialized
+*/
 bool 
 PWM::attach(std::string pin)
 {
   bool rv = WRITEFILESUCCESS;
 
 /*  if(!pwnPin.contains(pin))
-    return false;*/
+    return false;*/ 
+
+  int isAvailable;
+  std::ifstream irequestFile;
+  irequest.open(("/sys/class/pwm/" + pin + "/request").c_str());
+  irequest.exceptions(std::ios::badbit);
+  std::string line = "";
+  getline(irequest, line);
+  std::istringstream buffer(line);
+  buffer >> isAvailable;
+  irequest.close();
+
+  if(isAvailable != 0)
+    rv = OPENFILEFAIL;
+
+  if(!rv)
+    return rv;
+
   std::cout << "Writing: 1 to: " << "/sys/class/pwm/" + pin + "/request" << std::endl;
   std::ofstream requestFile;
   requestFile.open(("/sys/class/pwm/" + pin + "/request").c_str());
   requestFile.exceptions(std::ios::badbit);
   requestFile << "1" << std::endl;
   requestFile.close();
-
-  if(!rv)
-    return rv;
 
   int running;
   std::ifstream irunFile;
@@ -153,6 +179,11 @@ PWM::attach(std::string pin)
   return rv;
 }
 
+/**
+* PWM::detach
+* pin
+* return true if the pin is correctly detached
+*/
 bool 
 PWM::detach(std::string pin)
 {
@@ -181,6 +212,12 @@ PWM::detach(std::string pin)
   return rv;
 }
 
+/**
+* PWM::writePos write a Pos in degree for a servomotor
+* pin
+* pos
+* return true if the action is correct
+*/
 bool 
 PWM::writePos(std::string pin, int pos)
 {
@@ -199,6 +236,12 @@ PWM::writePos(std::string pin, int pos)
   return rv;
 }
 
+/**
+* PWM::writeNSDegree write a Pos in NSDegree for a servomotor
+* pin
+* NSDegree
+* return true if the action is correct
+*/
 bool 
 PWM::writeNSDegree(std::string pin, int NSDegree)
 {
@@ -217,6 +260,12 @@ PWM::writeNSDegree(std::string pin, int NSDegree)
   return rv;
 }
 
+/**
+* PWM::writeFrequency write a frequency in Hertz
+* pin
+* frequency
+* return true if the action is correct
+*/
 bool
 PWM::writeFrequency(std::string pin, int frequency)
 {
@@ -235,6 +284,12 @@ PWM::writeFrequency(std::string pin, int frequency)
   return rv;
 }
 
+/**
+* PWM::writePos write a percent band large
+* pin
+* percent
+* return true if the action is correct
+*/
 bool
 PWM::writeDutyPercent(std::string pin, int percent)
 {
@@ -258,6 +313,11 @@ PWM::writeDutyPercent(std::string pin, int percent)
   return rv;
 }
 
+/**
+* PWM::writePos
+* pin
+* return the name of the pin
+*/
 std::string 
 PWM::PWMName(int pin)
 {

@@ -19,7 +19,6 @@ public:
   bool freePin(int pin);
 
 private:
-  //std::string const DIR = "/sys/class/gpio/";
   std::string DIR;
 
 };

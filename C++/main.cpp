@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-   /*PWM servo;
+   PWM servo;
    servo.attach(PWMP9_14);
    servo.writePos(PWMP9_14, 180);
    int i = 0;
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 
     ++i;
    }
-   servo.detach(PWMP9_14);*/
-   PWM led;
+   servo.detach(PWMP9_14);
+   /*PWM led;
    led.attach(PWMP9_14);
    led.writeDutyPercent(PWMP9_14,50);
    int i = 0;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     ++i;
    }
-   led.detach(PWMP9_14);
+   led.detach(PWMP9_14);*/
    return 0;
 }
 
