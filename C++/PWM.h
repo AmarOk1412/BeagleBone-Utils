@@ -13,6 +13,7 @@ class PWM
 public:
   PWM();
   ~PWM();
+  void enablePin(std::string pin);
   bool attach(std::string pin);
   bool detach(std::string pin);
   bool writePos(std::string pin, int pos);
@@ -20,10 +21,10 @@ public:
   bool writeDutyPercent(std::string pin, int percent);
   bool writeNSDegree(std::string pin, int NSDegree);
   std::string PWMName(int pin);
+  bool isPWMPin(std::string pin);
 
 private:
   std::string pwnPin[8];
-  bool isPWMPin();
 
 };
 

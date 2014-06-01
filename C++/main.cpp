@@ -8,31 +8,17 @@
 int main(int argc, char *argv[])
 {
    PWM servo;
+   //servo.enablePin(PWMP9_14);
    servo.attach(PWMP9_14);
    servo.writePos(PWMP9_14, 180);
-   int i = 0;
-   while(i < 10000000)
-   {
-
-    ++i;
-   }
+   sleep(1);
    servo.writeNSDegree(PWMP9_14,500000);
-   i = 0;
-   while(i < 10000000)
-   {
-
-    ++i;
-   }
+   sleep(1);
    servo.detach(PWMP9_14);
    /*PWM led;
    led.attach(PWMP9_14);
    led.writeDutyPercent(PWMP9_14,50);
-   int i = 0;
-   while(i < 100000000000)
-   {
-
-    ++i;
-   }
+   sleep(1);
    led.detach(PWMP9_14);*/
    return 0;
 }
