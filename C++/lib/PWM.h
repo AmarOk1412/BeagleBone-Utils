@@ -5,7 +5,7 @@
 
 #define MIN_DUTY_NS 500000
 #define MAX_DUTY_NS 2000000
-#define PWM_FRECUENCY 50 //Hz
+#define PWM_FREQUENCY 50 //Hz
 #define DEGREE_TO_NS 1500000/180
 
 class PWM
